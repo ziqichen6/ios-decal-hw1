@@ -22,7 +22,7 @@ class Words {
 //: ### variables the same type? If not, why?
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: No, the values passed in to the **init** function and those set to the instance variables are not the same. Assuming wordA and wordB are optinals, the values set to the instance variables forcefully unwraps the optional value, so when wordA and wordB are nil, a runtime error will be triggered. In the values passed into the init function, wordA and wordB are declared as an optional, so they are wrapped, and if these optionalsl contain a nil value, it will gracefully fall.
 
 
 //: ## Q2: Variable Types and Function Types
@@ -30,23 +30,24 @@ class Words {
         let reversedWords = words.map() {String($0.characters.reverse())}
         var numElements = words.count
         
-        for let i = 0; i < numElements; i++ {
+        for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
                 return false
             }
         }
+        return true
     }
 //: ### Why does the compiler dislike the **for loop**? Fix it.
 //: ### What else is wrong with this function? You may have to refer to (but **not**
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: The compiler doesn't like the for loop because i is declared as a let, which is immutable and later it tries to increment i, so there is a problem. Instead, i should be declared as a var. This funtion also does not return true at the end, so if the word is a palindrome, the function exits with the wrong return type.
 
 
 //: ## Q3: More Functions and Object Initialization
     class func isAnagram() -> Bool {
-        var countLetters : [Character : Int] //Line X
+        var countLetters : [Character : Int] = [Character: Int]() //Line X
         var lenA = self.wordA.characters.count
         var lenB = self.wordB.characters.count
         
@@ -89,7 +90,7 @@ class Words {
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: in Line X, we do not initialize the dictionary countLetters, and then we immediately use it in Line Y, I fixed it so that we initialize countLetters in Line X.
     
     
 }
