@@ -20,15 +20,14 @@ class Words {
 
 //: ### Are the values passed in to the **init** function and those set to the instance
 //: ### variables the same type? If not, why?
-
-
-//: No, the values passed in to the **init** function and those set to the instance variables are not the same. Assuming wordA and wordB are optinals, the values set to the instance variables forcefully unwraps the optional value, so when wordA and wordB are nil, a runtime error will be triggered. In the values passed into the init function, wordA and wordB are declared as an optional, so they are wrapped, and if these optionalsl contain a nil value, it will gracefully fall.
+    
+//: No, the values passed in to the init function are wrapped optionals, but in the word class, wordA and wordB are already declared to be forcefully unwrapped optionals. self.wordA and self.wordB in the Words class was already declared as an unwrapped optional, so when the init function sets the values of self.wordA and self.wordB, they will unwrapp the optionals fed into the function.
 
 
 //: ## Q2: Variable Types and Function Types
-    func arePalindromes(words: [String]) -> Bool {
+    class func arePalindromes(words: [String]) -> Bool {
         let reversedWords = words.map() {String($0.characters.reverse())}
-        var numElements = words.count
+        let numElements = words.count
         
         for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
@@ -42,14 +41,14 @@ class Words {
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: The compiler doesn't like the for loop because i is declared as a let, which is immutable and later it tries to increment i, so there is a problem. Instead, i should be declared as a var. This funtion also does not return true at the end, so if the word is a palindrome, the function exits with the wrong return type.
+//: The compiler doesn't like the for loop because i is declared as a let, which is immutable and later it tries to increment i, so there is a problem. Instead, i should be declared as a var. This funtion also does not return true at the end, so if the word is a palindrome, the function exits with the wrong return type. In addition, arePalindrome is referenced in a class context, and before, it was an instance function, so you could only call it on an instance and not a class. Therefore, I had to fix it to be a class function.
 
 
 //: ## Q3: More Functions and Object Initialization
-    class func isAnagram() -> Bool {
+    func isAnagram() -> Bool {
         var countLetters : [Character : Int] = [Character: Int]() //Line X
-        var lenA = self.wordA.characters.count
-        var lenB = self.wordB.characters.count
+        let lenA = self.wordA.characters.count
+        let lenB = self.wordB.characters.count
         
         if lenA != lenB {
             return false
@@ -82,7 +81,7 @@ class Words {
             }
         }
         
-        return nil
+        return true
     }
 //: ### What is the problem with declaring **countLetters** as we do in **Line X**,
 //: ### and then using it in **Line Y**? Fix it (by only changing **Line X**).
@@ -90,7 +89,7 @@ class Words {
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: in Line X, we do not initialize the dictionary countLetters, and then we immediately use it in Line Y, I fixed it so that we initialize countLetters in Line X.
+//: in Line X, we do not initialize the dictionary countLetters, and then we immediately use it in Line Y, I fixed it so that we initialize countLetters in Line X. IsAnagram is also called on an instance variable, and before it was defined as a class function, so it was giving an error. I had to change it so that it is an instance method by deleting class.
     
     
 }
